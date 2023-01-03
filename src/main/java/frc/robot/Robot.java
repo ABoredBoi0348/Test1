@@ -19,16 +19,18 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.RobotMap.IOConstants;
 import frc.robot.RobotMap.LED;
-import frc.robot.autonomous.Autonomous;
-import frc.robot.autonomous.AutonomousProgram;
+//import frc.robot.autonomous.Autonomous;
+//import frc.robot.autonomous.AutonomousProgram;
 import frc.robot.commands.climber.DefaultClimb;
-import frc.robot.commands.drive.DefaultDrive;
+/*import frc.robot.commands.drive.DefaultDrive;
 import frc.robot.commands.drive.DriveHold;
 import frc.robot.commands.drive.DriveWait;
 import frc.robot.commands.drive.SetDriveSpeed;
+*/
 import frc.robot.commands.led.LEDRainbowRotate;
 import frc.robot.commands.led.LEDSolidColor;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 
@@ -36,8 +38,13 @@ public class Robot extends TimedRobot {
 
 	/* Define Robot Subsystems */
 	public static final DrivebaseSubsystem drivebase = new DrivebaseSubsystem();
+	public static DrivebaseSubsystem getDrivebase() {
+		return drivebase;
+	}
+
 	public static final LEDSubsystem ledStrip = new LEDSubsystem();
 	public static final ClimberSubsystem climb = new ClimberSubsystem();
+
 
 	/* RoboRio Sensors */
 	public static final AHRS navX = new AHRS();
@@ -85,7 +92,7 @@ public class Robot extends TimedRobot {
 		climb.resetEncoders();
 
 		// This runs if no other commands are scheduled (teleop)
-		drivebase.setDefaultCommand(new DefaultDrive());
+		//drivebase.setDefaultCommand(new DefaultDrive());
 		climb.setDefaultCommand(new DefaultClimb());
 		ledStrip.setDefaultCommand(new LEDRainbowRotate());
 
@@ -93,8 +100,8 @@ public class Robot extends TimedRobot {
 		drivebase.setMaxOutput(0.75);
 
 		/* Shuffleboard Stuff */
-		Autonomous.init();
-		AutonomousProgram.addAutosToShuffleboard();
+		//Autonomous.init();
+		//AutonomousProgram.addAutosToShuffleboard();
 
 		// Start Camera
 		CameraServer.startAutomaticCapture();
@@ -103,7 +110,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		// Chooses which auto we do from SmartDashboard
-		autonomousCommand = AutonomousProgram.autoChooser.getSelected().construct();
+		//autonomousCommand = AutonomousProgram.autoChooser.getSelected().construct();
 
 		// Schedule the selected autonomous command group
 		if (autonomousCommand != null) {
@@ -111,7 +118,7 @@ public class Robot extends TimedRobot {
 					// To achieve the configured delay, use a sequential group that contains a wait
 					// command
 					new SequentialCommandGroup(
-							new DriveWait(autoDelayChooser.getSelected()),
+							//new DriveWait(autoDelayChooser.getSelected()),
 							autonomousCommand));
 		}
 
@@ -145,6 +152,7 @@ public class Robot extends TimedRobot {
 	}
 
 	private void configureButtonBindings() {
+		/*\\
 		// While holding turbo button, increase drive speed to full power
 		new JoystickButton(rightJoystick, 2).whileHeld(new SetDriveSpeed(1));
 
@@ -163,6 +171,7 @@ public class Robot extends TimedRobot {
 		// Rotation clockwise
 		new JoystickButton(leftJoystick, 6).whileHeld(new DriveHold(1, -1));
 		new JoystickButton(leftJoystick, 4).whileHeld(new DriveHold(0.75, -0.75));
+		*/
 	}
 
 	/*
